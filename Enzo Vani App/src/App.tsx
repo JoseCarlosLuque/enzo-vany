@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent } from '@/components/card';
+import { Button } from '@/components/button';
+import { Input } from '@/components/input';
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  stock: number;
 }
 
-export default App
+const App: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    fetch('http://localhost:3001/products')
+      .then(res => res.json())
+      .then(data => setProducts(data));
+  }, []);
+
+  const handleSubscribe = async () => {
+    await fetch('http://localhost:3001/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    alert('¡Te has suscrito!');
+  };
+
+  return (
+    <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="col-span-3 mb-4">
+        <Input 
+          placeholder="Tu correo electrónico" 
+          value={email} 
+          onChange={e => setEmail(e.target.value)} 
+        />
+        <Button onClick={handleSubscribe} className="mt-2">Suscribirme</Button>
+      </div>
+      {products.map(product => (
+        <Card key={product.id}>
+          <CardContent>
+            <h2 className="text-xl font-bold">{product.name}</h2>
+            <p>Precio: ${product.price}</p>
+            <p>Stock: {product.stock}</p>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+};
+
+export default App;
