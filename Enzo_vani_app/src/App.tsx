@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Card, CardContent } from './components/card';
 import { Button } from './components/button';
 import { Input } from './components/input';
+import { Header } from '@components/header';
 
 interface Product {
   id: number;
@@ -30,28 +31,30 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div className="bg-green-500 text-white p-4">
-        ¡Tailwind está funcionando!
-    </div>
-      <div className="col-span-3 mb-4">
-        <Input 
-          placeholder="Tu correo electrónico" 
-          value={email} 
-          onChange={e => setEmail(e.target.value)} 
-        />
-        <Button onClick={handleSubscribe} className="mt-2">Suscribirme</Button>
+    <div>
+      <Header />
+      <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <div className="col-span-3 mb-4">
+          <Input
+            placeholder="Tu correo electrónico"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+          <Button onClick={handleSubscribe} className="mt-2">Suscribirme</Button>
+        </div>
+        {products.map(product => (
+          <Card key={product.id}>
+            <CardContent>
+              <h2 className="text-xl font-bold">{product.name}</h2>
+              <p>Precio: ${product.price}</p>
+              <p>Stock: {product.stock}</p>
+            </CardContent>
+          </Card>
+        ))}
       </div>
-      {products.map(product => (
-        <Card key={product.id}>
-          <CardContent>
-            <h2 className="text-xl font-bold">{product.name}</h2>
-            <p>Precio: ${product.price}</p>
-            <p>Stock: {product.stock}</p>
-          </CardContent>
-        </Card>
-      ))}
     </div>
+
   );
 };
 
