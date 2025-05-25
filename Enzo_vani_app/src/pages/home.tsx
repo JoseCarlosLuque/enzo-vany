@@ -8,6 +8,7 @@ interface Product {
   name: string;
   price: number;
   stock: number;
+  image: string;
 }
 
 const Home: React.FC = () => {
@@ -86,6 +87,7 @@ const Home: React.FC = () => {
               title={product.name}
               price={product.price}
               stock={product.stock}
+              image={product.image}
               onBuy={() => alert(`Has comprado ${product.name}`)}
             />
           </Card>
