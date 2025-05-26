@@ -84,11 +84,12 @@ const Home: React.FC = () => {
         {products.map((product) => (
           <Card key={product.id}>
             <CardContent
+              id={product.id}
               title={product.name}
               price={product.price}
               stock={product.stock}
               image={product.image}
-              onBuy={() => alert(`Has comprado ${product.name}`)}
+              //onBuy={() => alert(`Has comprado ${product.name}`)}
             />
           </Card>
         ))}
