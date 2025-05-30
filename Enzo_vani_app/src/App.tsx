@@ -3,6 +3,7 @@ import Home from "./pages/home";
 import About from "./pages/about";
 import Contact from "./pages/contact";
 import Cart from "./pages/cart";
+import Login from "./pages/login";
 
 const App: React.FC = () => {
   return (
@@ -13,7 +14,10 @@ const App: React.FC = () => {
           <Link to="/about">Acerca de nosotros</Link>
           <Link to="/contact">Contacto</Link>
         </div>
-        <div>
+        <div className="space-x-4">
+          <Link to="/login" className="hover:underline">
+           🔑 Login
+          </Link>
           <Link to="/cart" className="hover:underline">
             🛒 Carrito
           </Link>
@@ -25,6 +29,7 @@ const App: React.FC = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/login" element={<Login/>} /> 
       </Routes>
     </Router>
   );

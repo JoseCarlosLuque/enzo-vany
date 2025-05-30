@@ -13,9 +13,19 @@ const Cart: React.FC = () => {
       ) : (
         <div className="space-y-4">
           {cart.map((item, index) => (
-            <div key={index} className="border p-4 rounded shadow">
-              <h2 className="text-xl font-semibold">{item.name}</h2>
-              <p>Precio: ${item.price}</p>
+             <div
+              key={index}
+              className="flex items-center border p-4 rounded shadow"
+            >
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-24 h-24 object-cover rounded mr-4"
+              />
+              <div className="flex-grow">
+                <h2 className="text-xl font-semibold">{item.name}</h2>
+                <p className="text-gray-700">Precio: ${item.price.toFixed(2)}</p>
+              </div>
             </div>
           ))}
           <div className="text-right font-bold text-xl">
