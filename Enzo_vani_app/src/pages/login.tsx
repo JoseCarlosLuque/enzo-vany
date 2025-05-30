@@ -41,7 +41,19 @@ const Login: React.FC = () => {
 
       if (mode === "login") {
         localStorage.setItem("token", data.access_token);
-        alert("¡Login exitoso!");
+
+        const meRes = await fetch("http://localhost:8000/me", {
+          headers: {
+            Authorization: `Bearer ${data.access_token}`,
+          },
+        });
+
+        if (!meRes.ok) throw new Error("No se pudo obtener el usuario");
+
+        const meData = await meRes.json();
+        localStorage.setItem("role", meData.role); // guardamos el rol
+
+        alert(`¡Login exitoso como ${meData.role}!`);
         navigate("/");
       } else {
         alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
