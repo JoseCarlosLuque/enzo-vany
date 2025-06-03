@@ -1,14 +1,14 @@
-import { useCart } from '../context/CartContext';
-import CheckoutButton from '../components/button_checkout';
+import { useCart } from "../context/CartContext";
+import CheckoutButton from "../components/button_checkout";
 
 const Cart: React.FC = () => {
-  const { cart, updateQuantity } = useCart(); // ✅ vamos a asumir que después agregaremos updateQuantity al contexto
+  const { cart, updateQuantity, removeFromCart } = useCart(); // ✅ vamos a asumir que después agregaremos updateQuantity al contexto
 
   console.log("Contenido del carrito:", cart);
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const itemsForStripe = cart.map(item => ({
+  const itemsForStripe = cart.map((item) => ({
     name: item.name,
     price: item.price,
     quantity: item.quantity,
@@ -52,6 +52,12 @@ const Cart: React.FC = () => {
                   Subtotal: ${(item.price * item.quantity).toFixed(2)}
                 </p>
               </div>
+              <button
+                onClick={() => removeFromCart(item.id)}
+                className="ml-4 px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition"
+              >
+                Eliminar
+              </button>
             </div>
           ))}
           <div className="text-right font-bold text-xl mt-4">
