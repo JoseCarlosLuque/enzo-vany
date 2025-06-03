@@ -1,4 +1,5 @@
 import { useCart } from '../context/CartContext';
+import CheckoutButton from '../components/button_checkout';
 
 const Cart: React.FC = () => {
   const { cart, updateQuantity } = useCart(); // ✅ vamos a asumir que después agregaremos updateQuantity al contexto
@@ -6,6 +7,12 @@ const Cart: React.FC = () => {
   console.log("Contenido del carrito:", cart);
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const itemsForStripe = cart.map(item => ({
+    name: item.name,
+    price: item.price,
+    quantity: item.quantity,
+  }));
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
@@ -49,6 +56,9 @@ const Cart: React.FC = () => {
           ))}
           <div className="text-right font-bold text-xl mt-4">
             Total: ${total.toFixed(2)}
+          </div>
+          <div className="text-right mt-4">
+            <CheckoutButton items={itemsForStripe} />
           </div>
         </div>
       )}
