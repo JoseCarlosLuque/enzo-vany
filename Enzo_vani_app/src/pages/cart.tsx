@@ -1,9 +1,11 @@
 import { useCart } from '../context/CartContext';
 
 const Cart: React.FC = () => {
-  const { cart } = useCart();
+  const { cart, updateQuantity } = useCart(); // ✅ vamos a asumir que después agregaremos updateQuantity al contexto
 
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  console.log("Contenido del carrito:", cart);
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
@@ -13,7 +15,7 @@ const Cart: React.FC = () => {
       ) : (
         <div className="space-y-4">
           {cart.map((item, index) => (
-             <div
+            <div
               key={index}
               className="flex items-center border p-4 rounded shadow"
             >
@@ -24,11 +26,28 @@ const Cart: React.FC = () => {
               />
               <div className="flex-grow">
                 <h2 className="text-xl font-semibold">{item.name}</h2>
-                <p className="text-gray-700">Precio: ${item.price.toFixed(2)}</p>
+                <p className="text-gray-700">
+                  Precio unitario: ${item.price.toFixed(2)}
+                </p>
+                <div className="mt-2 flex items-center">
+                  <label className="mr-2">Cantidad:</label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={item.quantity}
+                    onChange={(e) =>
+                      updateQuantity(item.id, parseInt(e.target.value) || 1)
+                    }
+                    className="w-20 border rounded px-2 py-1"
+                  />
+                </div>
+                <p className="text-gray-700 mt-1">
+                  Subtotal: ${(item.price * item.quantity).toFixed(2)}
+                </p>
               </div>
             </div>
           ))}
-          <div className="text-right font-bold text-xl">
+          <div className="text-right font-bold text-xl mt-4">
             Total: ${total.toFixed(2)}
           </div>
         </div>

@@ -8,22 +8,50 @@ interface Product {
   image: string;
 }
 
+interface CartItem extends Product {
+  quantity: number; // ✅ nuevo campo
+}
+
 interface CartContextType {
-  cart: Product[];
+  cart: CartItem[];
   addToCart: (product: Product) => void;
+  updateQuantity: (productId: string, newQuantity: number) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [cart, setCart] = useState<Product[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   const addToCart = (product: Product) => {
-    setCart(prev => [...prev, product]);
+    setCart(prev => {
+      const existingItem = prev.find(item => item.id === product.id);
+      if (existingItem) {
+        // Incrementa la cantidad si ya está en el carrito
+        return prev.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        // Añade nuevo producto con quantity: 1
+        return [...prev, { ...product, quantity: 1 }];
+      }
+    });
+  };
+
+  const updateQuantity = (productId: string, newQuantity: number) => {
+    setCart(prev =>
+      prev.map(item =>
+        item.id === productId
+          ? { ...item, quantity: newQuantity }
+          : item
+      )
+    );
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, addToCart, updateQuantity }}>
       {children}
     </CartContext.Provider>
   );
