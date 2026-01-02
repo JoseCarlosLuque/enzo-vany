@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "noEmit": true,           // Indica que TS no debe generar archivos de salida
+    "emitDeclarationOnly": false,
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "strict": true,
     "jsx": "react-jsx",
     "baseUrl": "./src",

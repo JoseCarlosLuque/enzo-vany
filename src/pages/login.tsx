@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BACKEND_URL } from "@/config";
+import { BACKEND_URL } from "../config";
 
 const Login: React.FC = () => {
   const [mode, setMode] = useState<"login" | "register">("login");

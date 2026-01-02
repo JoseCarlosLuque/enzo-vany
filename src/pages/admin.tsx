@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BACKEND_URL } from "../config";
 
 interface Product {
   id: string;
@@ -19,13 +20,13 @@ const AdminPanel: React.FC = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    fetch("http://localhost:8000/products")
+    fetch(`${BACKEND_URL}}/products`)
       .then(res => res.json())
       .then((data: Product[]) => setProducts(data));
   }, []);
 
   const handleUpdate = async (product: Product) => {
-    await fetch(`http://localhost:8000/admin/products/${product.id}`, {
+    await fetch(`${BACKEND_URL}/admin/products/${product.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +43,7 @@ const AdminPanel: React.FC = () => {
   };
 
   const handleDelete = async (productId: string) => {
-    await fetch(`http://localhost:8000/admin/products/${productId}`, {
+    await fetch(`${BACKEND_URL}/admin/products/${productId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`
@@ -53,7 +54,7 @@ const AdminPanel: React.FC = () => {
   };
 
   const handleAdd = async () => {
-    const res = await fetch(`http://localhost:8000/admin/products`, {
+    const res = await fetch(`${BACKEND_URL}/admin/products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

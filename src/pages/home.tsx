@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "../components/card";
+import { BACKEND_URL } from "../config";
 import { Button } from "../components/button";
 import { Input } from "../components/input";
 
@@ -16,13 +17,13 @@ const Home: React.FC = () => {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8000/products")
+    fetch(`${BACKEND_URL}}/products`)
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
 
   const handleSubscribe = async () => {
-    await fetch("http://localhost:8000/subscribe", {
+    await fetch(`${BACKEND_URL}}/subscribe`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),

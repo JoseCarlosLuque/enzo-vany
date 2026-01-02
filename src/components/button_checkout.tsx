@@ -1,6 +1,6 @@
 import { loadStripe } from '@stripe/stripe-js';
 import { useState } from 'react';
-import { BACKEND_URL , STRIPE_KEY } from '@/config';
+import { BACKEND_URL , STRIPE_KEY } from '../config';
 
 
 const stripePromise = loadStripe(STRIPE_KEY); 

@@ -1,0 +1,2 @@
+export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+export const STRIPE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
