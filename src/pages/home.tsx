@@ -17,13 +17,13 @@ const Home: React.FC = () => {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
-    fetch(`${BACKEND_URL}}/products`)
+    fetch(`${BACKEND_URL}/products`)
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
 
   const handleSubscribe = async () => {
-    await fetch(`${BACKEND_URL}}/subscribe`, {
+    await fetch(`${BACKEND_URL}/subscribe`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),

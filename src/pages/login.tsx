@@ -13,8 +13,8 @@ const Login: React.FC = () => {
     try {
       const url =
         mode === "login"
-          ? `${BACKEND_URL}}/login`
-          : `${BACKEND_URL}}/register`;
+          ? `${BACKEND_URL}/login`
+          : `${BACKEND_URL}/register`;
 
       const res = await fetch(url, {
         method: "POST",
@@ -43,7 +43,7 @@ const Login: React.FC = () => {
       if (mode === "login") {
         localStorage.setItem("token", data.access_token);
 
-        const meRes = await fetch(`${BACKEND_URL}}/me`, {
+        const meRes = await fetch(`${BACKEND_URL}/me`, {
           headers: {
             Authorization: `Bearer ${data.access_token}`,
           },

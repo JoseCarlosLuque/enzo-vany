@@ -20,7 +20,7 @@ const AdminPanel: React.FC = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    fetch(`${BACKEND_URL}}/products`)
+    fetch(`${BACKEND_URL}/products`)
       .then(res => res.json())
       .then((data: Product[]) => setProducts(data));
   }, []);
