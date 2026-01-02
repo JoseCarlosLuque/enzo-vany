@@ -1,7 +1,9 @@
 import { loadStripe } from '@stripe/stripe-js';
 import { useState } from 'react';
+import { BACKEND_URL , STRIPE_KEY } from '@/config';
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY); // ⚠️ asegúrate de meter esta var en tu .env
+
+const stripePromise = loadStripe(STRIPE_KEY); 
 
 interface CheckoutButtonProps {
   items: { name: string; price: number; quantity: number }[];
@@ -21,7 +23,7 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ items }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/create-checkout-session', {
+      const response = await fetch(`${BACKEND_URL}/create-checkout-session`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ items }),

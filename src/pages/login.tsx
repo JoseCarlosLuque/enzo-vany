@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "@/config";
 
 const Login: React.FC = () => {
   const [mode, setMode] = useState<"login" | "register">("login");
@@ -12,8 +13,8 @@ const Login: React.FC = () => {
     try {
       const url =
         mode === "login"
-          ? "http://localhost:8000/login"
-          : "http://localhost:8000/register";
+          ? `${BACKEND_URL}}/login`
+          : `${BACKEND_URL}}/register`;
 
       const res = await fetch(url, {
         method: "POST",
@@ -42,7 +43,7 @@ const Login: React.FC = () => {
       if (mode === "login") {
         localStorage.setItem("token", data.access_token);
 
-        const meRes = await fetch("http://localhost:8000/me", {
+        const meRes = await fetch(`${BACKEND_URL}}/me`, {
           headers: {
             Authorization: `Bearer ${data.access_token}`,
           },
